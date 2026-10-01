@@ -21,17 +21,27 @@ export default function StatementCard({
 }) {
   return (
     <div className={styles.statementCard}>
-      <div className={styles.woodenBoard}>
-        <span className={`${styles.boardPin} ${styles.pinTopLeft}`} aria-hidden="true" />
-        <span className={`${styles.boardPin} ${styles.pinTopRight}`} aria-hidden="true" />
-        <span className={`${styles.boardPin} ${styles.pinBottomLeft}`} aria-hidden="true" />
-        <span className={`${styles.boardPin} ${styles.pinBottomRight}`} aria-hidden="true" />
-        <div className={styles.boardTop}>
+      <div className={styles.statementHeading}>
+        <h2>Find the mistake.</h2>
+        <details className={styles.instructions}>
+          <summary aria-label="How to play" title="How to play">?</summary>
+          <div className={styles.instructionsPopover}>
+            <h3>How to play</h3>
+            <ol>
+              <li>Select the words you think are wrong, or mark the statement correct.</li>
+              <li>Explain your reasoning in your own words.</li>
+              <li>Shoot your answer. You have three attempts per statement.</li>
+            </ol>
+            <p>Need a hint? Ask Robin in the bottom-right corner.</p>
+          </div>
+        </details>
+      </div>
+      <p className={styles.claimInstruction}>Click or drag over the part you think is incorrect.</p>
+      <div className={styles.claimCard}>
+        <div className={styles.claimTop}>
           <span>FIELD NOTES</span>
-          <span className={styles.boardStamp}><span aria-hidden="true">◎</span> CLAIM UNDER REVIEW</span>
+          <span className={styles.claimStamp}><span aria-hidden="true">◎</span> CLAIM UNDER REVIEW</span>
         </div>
-        <h2 className={styles.boardTitle}>Find the mistake.</h2>
-        <p className={styles.boardInstruction}>Click or drag over the part you think is incorrect.</p>
         <div className={styles.statementText}>
           <TextSelector
             text={statement}
@@ -41,7 +51,7 @@ export default function StatementCard({
             hintSpan={believesCorrect ? null : hintSpan}
           />
         </div>
-        <div className={styles.boardBottom}>
+        <div className={styles.claimBottom}>
           <span className={styles.selectionStatus}><span aria-hidden="true">{selectedSpan ? "↗" : "⊕"}</span>{selectedSpan ? "Target selected" : "Choose your target"}</span>
           <span>READ. REASON. RELEASE.</span>
         </div>

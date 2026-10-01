@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import HunterBrand from "./HunterBrand";
 
 import WindingPath from "./WindingPath";
 import { getCompletedLevelIds } from "@/lib/progress";
@@ -50,7 +50,7 @@ export default function Roadmap({
   return (
     <div className="forest-shell">
       <header className="forest-header">
-        <Link href="/" className="forest-brand"><span className="forest-brand-mark">↗</span>Mistake Hunter<span className="forest-brand-dot">.</span></Link>
+        <HunterBrand />
         <span className="forest-header-label">THE LEARNING TRAIL</span>
         <span className="forest-course-pill"><span />Physics 101</span>
       </header>
@@ -96,7 +96,6 @@ export default function Roadmap({
             </section>
           );
         })}
-            <div className="forest-map-footer">Every mistake is a chance to learn.<span>Stay sharp, hunter.</span></div>
           </div>
         </div>
       </main>

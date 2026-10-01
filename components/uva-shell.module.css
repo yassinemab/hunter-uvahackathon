@@ -1,0 +1,29 @@
+.rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 54px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1b1b19;
+  color: #f2f2e9;
+  border-right: 1px solid #34352e;
+  padding: 12px 0;
+}
+.railTop, .railItems, .railBottom { display: flex; flex-direction: column; align-items: center; }
+.railTop { margin-bottom: 14px; }
+.uvaWordmark { font: 600 12px/1.2 Georgia, serif; letter-spacing: -.4px; margin: 4px 0 0; color: #f7f6ec; }
+.railItems { gap: 3px; }
+.railBottom { margin-top: auto; gap: 3px; }
+.railIcon { position: relative; display: grid; place-items: center; width: 42px; height: 39px; border-radius: 7px; color: #eaece2; }
+.railIcon svg { width: 23px; height: 23px; }
+.active { background: #3b4935; color: #d5e6b7; margin-top: 8px; }
+.active::before { content: ''; position: absolute; left: -6px; top: 7px; bottom: 7px; width: 3px; background: #c5d89e; border-radius: 0 3px 3px 0; }
+.active:focus-visible { outline: 2px solid #dfb16e; outline-offset: 1px; }
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; text-decoration: none; color: #263e33; }
+.brandRobin { width: 42px; height: 46px; object-fit: contain; }
+.brand > span { display: flex; flex-direction: column; gap: 3px; }
+.brand strong { font-size: 24px; line-height: 1; font-weight: 750; letter-spacing: -.8px; }
+.brandDot { color: #dc8b51; }
+.brand small { font-size: 9px; line-height: 1; letter-spacing: .6px; color: #859078; }

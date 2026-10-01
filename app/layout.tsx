@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import UvaSidebar from "@/components/UvaSidebar";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mistake Hunter",
+  title: "Hunter | UvA AI Chat",
   description: "Find the mistake in AI-generated statements and sharpen your understanding of Physics 101.",
 };
 
@@ -23,7 +24,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <UvaSidebar />
+        <div className="uva-workspace">{children}</div>
+      </body>
     </html>
   );
 }

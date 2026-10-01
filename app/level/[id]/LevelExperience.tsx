@@ -8,6 +8,7 @@ import FeedbackCard from "@/components/FeedbackCard";
 import ProgressBar from "@/components/ProgressBar";
 import StatementCard from "@/components/StatementCard";
 import RobinMascot from "@/components/RobinMascot";
+import HunterBrand from "@/components/HunterBrand";
 import styles from "@/components/lesson-ui.module.css";
 import { MAX_ATTEMPTS } from "@/lib/constants";
 import { computeHintSpan } from "@/lib/hint";
@@ -178,31 +179,34 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
   return (
     <div className={styles.lesson}>
       <header className={styles.topbar}>
-        <Link href="/" className={styles.brand} aria-label="Mistake Hunter home">
-          <span className={styles.brandMark} aria-hidden="true">↗</span>
-          Mistake Hunter<span className={styles.brandDot}>.</span>
-        </Link>
+        <HunterBrand />
         <div className={styles.levelContext}>
           <div className={styles.contextPath}><span>{level.chapterTitle}</span><span aria-hidden="true">/</span><h1>{level.title}</h1></div>
           <p>LEVEL {level.levelIndex} OF {level.levelCount}</p>
         </div>
         <div className={styles.topbarActions}>
-          <details className={styles.instructions}>
-            <summary aria-label="How to play" title="How to play">?</summary>
-            <div className={styles.instructionsPopover}>
-              <h2>How to play</h2>
-              <ol>
-                <li>Select the words you think are wrong, or mark the statement correct.</li>
-                <li>Explain your reasoning in your own words.</li>
-                <li>Shoot your answer. You have three attempts per statement.</li>
-              </ol>
-              <p>Need a hint? Ask Robin in the bottom-right corner.</p>
-            </div>
-          </details>
           <Link href="/" className={styles.mapLink}>Back to forest <span aria-hidden="true">↗</span></Link>
         </div>
       </header>
 
+      <div className={styles.forestDecor} aria-hidden="true">
+        <svg className={styles.forestLeft} viewBox="0 0 210 460" fill="none">
+          <path d="M95 436V122" stroke="#c8d2b8" strokeWidth="7" strokeLinecap="round" />
+          <path d="m96 262-58-67m58 29 52-79m-51 183 47-43" stroke="#c8d2b8" strokeWidth="4" strokeLinecap="round" />
+          <path d="M98 44c-54 40-85 102-78 164 51-15 78-62 78-164Z" fill="#dce3ce" />
+          <path d="M99 80c53 22 81 70 82 114-50-9-79-53-82-114Z" fill="#e1e6d5" />
+          <path d="M57 248c-32-8-53 4-60 33 35 6 53-8 60-33Zm85 14c25-20 49-15 61 10-22 22-47 17-61-10Z" fill="#dde4cf" />
+          <path d="M22 435c25-35 61-47 81-20-22 29-55 31-81 20Z" fill="#e0e5d3" />
+          <path d="M111 431c24-44 62-49 85-22-21 32-51 44-85 22Z" fill="#e5e9dc" />
+        </svg>
+        <svg className={styles.forestRight} viewBox="0 0 180 330" fill="none">
+          <path d="M97 307V76" stroke="#cbd4bd" strokeWidth="5" strokeLinecap="round" />
+          <path d="m96 181-38-50m39 93 33-37" stroke="#cbd4bd" strokeWidth="3" strokeLinecap="round" />
+          <path d="M94 20c-44 34-67 86-66 137 44-13 67-58 66-137Z" fill="#dfe5d2" />
+          <path d="M99 53c45 26 64 69 58 111-39-18-58-57-58-111Z" fill="#e5e9db" />
+          <path d="M130 185c24-12 46-2 49 24-30 11-47 0-49-24Z" fill="#dfe5d2" />
+        </svg>
+      </div>
       <main className={styles.main}>
 
         {status === "loading" && (
@@ -274,12 +278,14 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
                     disabled={evaluating}
                     hintSpan={hintSpan}
                   />
-                  <ExplanationInput
-                    label={believesCorrect ? "Why?" : "Why is this incorrect?"}
-                    value={explanation}
-                    onChange={setExplanation}
-                    disabled={evaluating}
-                  />
+                  {(selectedSpan || believesCorrect) && (
+                    <ExplanationInput
+                      label={believesCorrect ? "Why?" : "Why is this incorrect?"}
+                      value={explanation}
+                      onChange={setExplanation}
+                      disabled={evaluating}
+                    />
+                  )}
                   {evalError && <p className={styles.errorMessage} role="alert">{evalError}</p>}
                   <div className={styles.submitRow}>
                     <p>One arrow. One well-reasoned answer.</p>
@@ -292,15 +298,14 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
             </section>
           </div>
         )}
-        <footer className={styles.footer}><span>TAKE YOUR TIME. AIM WITH UNDERSTANDING.</span><span>MISTAKE HUNTER · FIELD NOTES</span></footer>
       </main>
 
-      {status === "ready" && !completed && !evaluation && current?.incorrectSpan && !believesCorrect && (
+      {status === "ready" && !completed && !evaluation && (
         <div className={styles.helpDock}>
           {helpOpen && (
             <div className={styles.helpFlyout} id="robin-help-flyout">
               <span className={styles.helpName}>ROBIN&apos;S LOOKOUT</span>
-              <p>{hintRevealed ? "The golden highlight shows where to look. What doesn't add up?" : "Need another pair of eyes? I can point you in the right direction."}</p>
+              <p>{hintRevealed ? "Read the claim once more. Check its definitions and relationships against what you know." : "Need another pair of eyes? Let's take a closer look together."}</p>
               <button type="button" onClick={() => setHintRevealed((prev) => !prev)} disabled={evaluating} aria-pressed={hintRevealed} className={styles.helpAction}>
                 {hintRevealed ? "Hide hint" : "Get help"}<span aria-hidden="true">↗</span>
               </button>
