@@ -190,25 +190,23 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
         </div>
       </header>
 
-      <div className={styles.forestDecor} aria-hidden="true">
-        <svg className={styles.forestLeft} viewBox="0 0 210 460" fill="none">
-          <path d="M95 436V122" stroke="#c8d2b8" strokeWidth="7" strokeLinecap="round" />
-          <path d="m96 262-58-67m58 29 52-79m-51 183 47-43" stroke="#c8d2b8" strokeWidth="4" strokeLinecap="round" />
-          <path d="M98 44c-54 40-85 102-78 164 51-15 78-62 78-164Z" fill="#dce3ce" />
-          <path d="M99 80c53 22 81 70 82 114-50-9-79-53-82-114Z" fill="#e1e6d5" />
-          <path d="M57 248c-32-8-53 4-60 33 35 6 53-8 60-33Zm85 14c25-20 49-15 61 10-22 22-47 17-61-10Z" fill="#dde4cf" />
-          <path d="M22 435c25-35 61-47 81-20-22 29-55 31-81 20Z" fill="#e0e5d3" />
-          <path d="M111 431c24-44 62-49 85-22-21 32-51 44-85 22Z" fill="#e5e9dc" />
-        </svg>
-        <svg className={styles.forestRight} viewBox="0 0 180 330" fill="none">
-          <path d="M97 307V76" stroke="#cbd4bd" strokeWidth="5" strokeLinecap="round" />
-          <path d="m96 181-38-50m39 93 33-37" stroke="#cbd4bd" strokeWidth="3" strokeLinecap="round" />
-          <path d="M94 20c-44 34-67 86-66 137 44-13 67-58 66-137Z" fill="#dfe5d2" />
-          <path d="M99 53c45 26 64 69 58 111-39-18-58-57-58-111Z" fill="#e5e9db" />
-          <path d="M130 185c24-12 46-2 49 24-30 11-47 0-49-24Z" fill="#dfe5d2" />
-        </svg>
-      </div>
       <main className={styles.main}>
+        <div className={styles.forestClearing} aria-hidden="true">
+          <div className={styles.clearingGround} />
+          <svg className={styles.clearingTrail} viewBox="0 0 1000 150" preserveAspectRatio="none" fill="none">
+            <path d="M-30 131C100 80 170 135 300 112S450 92 520 117S700 150 800 115S930 90 1030 130" stroke="#a88a60" strokeWidth="33" />
+            <path d="M-30 129C100 78 170 133 300 110S450 90 520 115S700 148 800 113S930 88 1030 128" stroke="#ddc295" strokeWidth="25" />
+          </svg>
+          <span className={`${styles.clearingTree} ${styles.treeOne}`} />
+          <span className={`${styles.clearingTree} ${styles.treeTwo}`} />
+          <span className={`${styles.clearingTree} ${styles.treeThree}`} />
+          <span className={`${styles.clearingTree} ${styles.treeFour}`} />
+          <span className={`${styles.clearingTree} ${styles.treeFive}`} />
+          <span className={`${styles.clearingTree} ${styles.treeSix}`} />
+          <span className={`${styles.clearingWoodland} ${styles.woodlandOne}`} />
+          <span className={`${styles.clearingWoodland} ${styles.woodlandTwo}`} />
+          <span className={`${styles.clearingWoodland} ${styles.woodlandThree}`} />
+        </div>
 
         {status === "loading" && (
           <div className={styles.loadingCard} role="status">

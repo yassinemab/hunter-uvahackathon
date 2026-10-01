@@ -51,7 +51,7 @@ export default function Roadmap({
     <div className="forest-shell">
       <header className="forest-header">
         <HunterBrand />
-        <span className="forest-header-label">THE LEARNING TRAIL</span>
+        <span className="forest-header-label">Catch, Check, Correct</span>
         <span className="forest-course-pill"><span />Physics 101</span>
       </header>
       <main className="forest-layout">
