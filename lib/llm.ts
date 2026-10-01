@@ -142,7 +142,7 @@ function validateStatement(raw: RawStatement): GeneratedStatement {
 
 export async function generateStatements(level: LevelWithContext): Promise<GeneratedStatement[]> {
   try {
-    const systemPrompt = `You are an exam-writing assistant for a biology learning game called Mistake Hunter, in the "two truths and a lie" format. Students must find the one false statement among three. You MUST respond with ONLY valid JSON, no prose, no markdown fences.`;
+    const systemPrompt = `You are an exam-writing assistant for a physics learning game called Mistake Hunter, in the "two truths and a lie" format. Students must find the one false statement among three. You MUST respond with ONLY valid JSON, no prose, no markdown fences.`;
 
     const userPrompt = `Study material (topic: "${level.chapterTitle}", level ${level.levelIndex} of ${level.levelCount}: "${level.title}"):
 """
@@ -313,7 +313,7 @@ export async function evaluateAnswer(
   const clampedAttempt = Math.min(Math.max(attemptNumber, 1), MAX_ATTEMPTS);
 
   try {
-    const systemPrompt = `You are a friendly, encouraging biology tutor grading a student's attempt to spot a mistake in an AI-generated statement. You MUST respond with ONLY valid JSON, no prose, no markdown fences. Be forgiving about exact wording — judge whether the student's reasoning demonstrates real understanding, not whether they used the same words as the ground truth.`;
+    const systemPrompt = `You are a friendly, encouraging physics tutor grading a student's attempt to spot a mistake in an AI-generated statement. You MUST respond with ONLY valid JSON, no prose, no markdown fences. Be forgiving about exact wording — judge whether the student's reasoning demonstrates real understanding, not whether they used the same words as the ground truth.`;
 
     const userPrompt = `Statement shown to the student: "${statement.statement}"
 

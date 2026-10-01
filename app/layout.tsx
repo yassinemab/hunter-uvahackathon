@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mistake Hunter",
-  description: "Find the mistake in AI-generated statements and sharpen your understanding of Biology 101.",
+  description: "Find the mistake in AI-generated statements and sharpen your understanding of Physics 101.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

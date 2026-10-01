@@ -1,6 +1,6 @@
 // Shared types for Mistake Hunter.
 //
-// A LearningSet currently maps 1:1 to a hardcoded topic in lib/biology.ts,
+// A LearningSet currently maps 1:1 to a hardcoded topic in lib/physics.ts,
 // but is shaped so that it can later be produced by parsing an uploaded
 // PDF/notes/slides instead.
 

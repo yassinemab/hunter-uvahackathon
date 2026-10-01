@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { getLevel } from "@/lib/biology";
+import { getLevel } from "@/lib/physics";
 
 import LevelExperience from "./LevelExperience";
 

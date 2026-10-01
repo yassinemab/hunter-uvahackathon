@@ -1,4 +1,4 @@
-import { finalChallengeId } from "./biology";
+import { finalChallengeId } from "./physics";
 import type { GeneratedStatement } from "./types";
 
 // Deterministic fallback content, used automatically whenever the LLM call
@@ -19,244 +19,226 @@ type StatementSeed = {
 };
 
 const seeds: Record<string, StatementSeed[]> = {
-  "cell-biology": [
+  kinematics: [
     {
       statement:
-        "Mitochondria are the primary site of aerobic respiration, generating most of the cell's ATP through oxidative phosphorylation.",
+        "Acceleration due to gravity near Earth's surface is approximately 9.8 m/s², directed downward toward the center of the Earth.",
       isCorrect: true,
       explanation:
-        "This is correct. Mitochondria have a double membrane and their own DNA, and are where most ATP is produced via oxidative phosphorylation.",
+        "Correct. Free fall near Earth's surface occurs under a constant downward acceleration of about 9.8 m/s².",
       relevantMaterial:
-        "The mitochondria are the primary site of aerobic respiration, generating most of the cell's ATP through oxidative phosphorylation.",
+        "Free fall near Earth's surface occurs under a constant gravitational acceleration of approximately 9.8 m/s², directed downward.",
     },
     {
       statement:
-        "The nucleus is surrounded by a double membrane and serves as the main site of protein synthesis in the cell.",
+        "In projectile motion with no air resistance, the horizontal velocity stays constant throughout the flight while the vertical velocity changes due to gravity.",
+      isCorrect: true,
+      explanation:
+        "Correct. Horizontal and vertical motion are independent; horizontal velocity is constant, and vertical velocity changes just like in free fall.",
+      relevantMaterial:
+        "In projectile motion with no air resistance, the horizontal and vertical components of motion are independent: horizontal velocity stays constant throughout the flight... while vertical velocity changes continuously due to gravity.",
+    },
+    {
+      statement:
+        "According to the kinematic equations, if an object starts at rest and accelerates uniformly over a distance, its final velocity is directly proportional to the distance traveled.",
       isCorrect: false,
-      mistakePhrase: "protein synthesis",
+      mistakePhrase: "directly proportional to the distance traveled",
       explanation:
-        "The nucleus is the site of DNA replication and transcription, not protein synthesis. Protein synthesis (translation) happens at ribosomes, either free in the cytoplasm or on the rough endoplasmic reticulum.",
+        "Since v² = 2a·x when starting from rest, velocity is proportional to the square root of the distance traveled, not directly proportional to the distance itself.",
       relevantMaterial:
-        "The nucleus houses the cell's DNA... and is the site of DNA replication and transcription. Ribosomes... are the site of protein synthesis (translation).",
-    },
-    {
-      statement:
-        "The Golgi apparatus modifies, sorts, and packages proteins and lipids received from the endoplasmic reticulum into vesicles for transport.",
-      isCorrect: true,
-      explanation:
-        "Correct. The Golgi apparatus receives proteins and lipids from the ER and packages them into vesicles for transport to their destinations.",
-      relevantMaterial:
-        "The Golgi apparatus modifies, sorts, and packages proteins and lipids received from the ER into vesicles for transport to their destinations.",
+        "v² = v0² + 2a(x - x0)... when starting from rest (v0 = 0), velocity ends up proportional to the square root of the distance traveled, not directly proportional to the distance itself.",
     },
   ],
-  genetics: [
+  "newtons-laws": [
     {
       statement:
-        "During meiosis, homologous chromosomes separate during anaphase I, while sister chromatids remain joined until anaphase II.",
+        "Newton's second law states that the net force on an object equals its mass multiplied by its acceleration.",
       isCorrect: true,
-      explanation:
-        "Correct. Homologous chromosomes separate in anaphase I; sister chromatids stay joined until they separate in anaphase II.",
+      explanation: "Correct. This is Newton's second law, F = ma.",
       relevantMaterial:
-        "During meiosis I, homologous chromosomes pair up and separate during anaphase I... sister chromatids only separate during anaphase II.",
+        "Newton's second law states that the net force on an object equals its mass times its acceleration: F = ma.",
     },
     {
       statement:
-        "Guanine pairs with cytosine via two hydrogen bonds, while adenine pairs with thymine via three hydrogen bonds.",
+        "Newton's third law states that for every action force, there is an equal and opposite reaction force acting on a different object.",
+      isCorrect: true,
+      explanation:
+        "Correct. Action-reaction force pairs act on two different objects, not the same object.",
+      relevantMaterial:
+        "Newton's third law states that for every action force one object exerts on a second object, the second object exerts an equal and opposite reaction force back on the first — these two forces act on different objects.",
+    },
+    {
+      statement:
+        "An object's weight, like its mass, is measured in kilograms and stays the same regardless of the local strength of gravity.",
       isCorrect: false,
-      mistakePhrase: "two hydrogen bonds",
+      mistakePhrase: "is measured in kilograms and stays the same regardless of the local strength of gravity",
       explanation:
-        "This reverses the bond counts. Guanine and cytosine actually form three hydrogen bonds, while adenine and thymine form two.",
+        "Weight is a force (W = mg) measured in newtons, and it changes with local gravity. Only mass, measured in kilograms, stays constant.",
       relevantMaterial:
-        "Adenine pairs with thymine via two hydrogen bonds, and guanine pairs with cytosine via three hydrogen bonds.",
-    },
-    {
-      statement:
-        "Humans are diploid organisms whose gametes are produced through meiosis, resulting in haploid sperm and egg cells that each carry 23 chromosomes.",
-      isCorrect: true,
-      explanation:
-        "Correct. Humans are diploid (46 chromosomes), and meiosis produces haploid gametes with 23 chromosomes each.",
-      relevantMaterial:
-        "Humans are diploid, carrying two copies of each chromosome (23 pairs, 46 total)... Gametes... are haploid, containing only 23 chromosomes, produced through meiosis.",
+        "Weight is the force of gravity acting on an object's mass, calculated as W = mg, measured in newtons, and it does change with the local strength of gravity.",
     },
   ],
-  evolution: [
+  "energy-work": [
     {
-      statement:
-        "Natural selection acts on existing variation within a population and does not create new traits on demand.",
+      statement: "Kinetic energy is calculated as one-half times mass times velocity squared.",
       isCorrect: true,
-      explanation:
-        "Correct. Natural selection works on variation that already exists in a population rather than generating new traits as needed.",
-      relevantMaterial:
-        "Natural selection acts on existing variation within a population; it does not create new traits on demand.",
+      explanation: "Correct. KE = (1/2)mv².",
+      relevantMaterial: "Kinetic energy, the energy of motion, is given by KE = (1/2)mv².",
     },
     {
       statement:
-        "Genetic drift is a mechanism of evolutionary change that requires a trait to be beneficial in order to spread through a population.",
+        "The work-energy theorem states that the net work done on an object equals its change in kinetic energy.",
+      isCorrect: true,
+      explanation: "Correct, this is the work-energy theorem.",
+      relevantMaterial:
+        "The work-energy theorem states that the net work done on an object equals its change in kinetic energy.",
+    },
+    {
+      statement:
+        "When a ball is dropped and falls freely under gravity with no air resistance, its total mechanical energy increases as it falls because its kinetic energy increases.",
       isCorrect: false,
-      mistakePhrase: "requires a trait to be beneficial in order to spread through a population",
+      mistakePhrase: "its total mechanical energy increases as it falls because its kinetic energy increases",
       explanation:
-        "Genetic drift is driven by random chance, not by whether a trait is beneficial. It has an especially strong effect in small populations regardless of fitness.",
+        "Total mechanical energy (kinetic + potential) stays constant during free fall without air resistance — kinetic energy increases but potential energy decreases by the same amount, so the total doesn't change.",
       relevantMaterial:
-        "Genetic drift is a separate mechanism of evolutionary change caused by random chance, which has a particularly strong effect in small populations and does not require a trait to be beneficial.",
-    },
-    {
-      statement:
-        "Convergent evolution occurs when unrelated species independently evolve similar traits because they face similar environmental pressures.",
-      isCorrect: true,
-      explanation:
-        "Correct. Convergent evolution describes unrelated species independently evolving similar traits under similar pressures, like bat and bird wings.",
-      relevantMaterial:
-        "Convergent evolution occurs when unrelated species independently evolve similar traits because they face similar environmental pressures, such as the wings of bats and birds.",
+        "the total mechanical energy of a system (kinetic plus potential) remains constant over time... potential energy decreases as its height decreases while its kinetic energy increases by an equal amount.",
     },
   ],
-  "cellular-respiration": [
+  momentum: [
     {
       statement:
-        "Glycolysis takes place in the cytoplasm and splits one glucose molecule into two pyruvate molecules without requiring oxygen.",
+        "In a perfectly inelastic collision, the two objects stick together and move with a shared final velocity after the collision.",
       isCorrect: true,
-      explanation:
-        "Correct. Glycolysis is an anaerobic process that occurs in the cytoplasm and converts one glucose into two pyruvate molecules.",
+      explanation: "Correct. That's the definition of a perfectly inelastic collision.",
       relevantMaterial:
-        "Glycolysis occurs in the cytoplasm and does not require oxygen. It splits one molecule of glucose... into two molecules of pyruvate.",
+        "A perfectly inelastic collision is a special case... in which the two objects stick together after colliding and move off with a single shared final velocity.",
+    },
+    {
+      statement: "Momentum is conserved in an isolated system where no net external force acts on it.",
+      isCorrect: true,
+      explanation: "Correct, this is the law of conservation of momentum.",
+      relevantMaterial:
+        "The law of conservation of momentum states that in an isolated system with no net external force, the total momentum before an interaction equals the total momentum after it.",
     },
     {
       statement:
-        "The electron transport chain is located in the inner mitochondrial membrane, where oxygen acts as the final electron acceptor, combining with electrons and protons to form carbon dioxide.",
+        "In an elastic collision, momentum is conserved but kinetic energy is not, since some of it converts into heat and deformation.",
       isCorrect: false,
-      mistakePhrase: "carbon dioxide",
+      mistakePhrase: "kinetic energy is not, since some of it converts into heat and deformation",
       explanation:
-        "Oxygen combines with electrons and protons at the end of the electron transport chain to form water, not carbon dioxide. CO2 is released earlier, during the citric acid cycle.",
+        "This describes an inelastic collision. In an elastic collision, both momentum and kinetic energy are conserved.",
       relevantMaterial:
-        "Oxygen serves as the final electron acceptor, combining with electrons and protons to form water; this is why the process is called aerobic respiration.",
-    },
-    {
-      statement:
-        "Aerobic respiration of one glucose molecule yields roughly 30-32 ATP in total, far more than glycolysis alone produces.",
-      isCorrect: true,
-      explanation:
-        "Correct. Full aerobic breakdown of glucose yields roughly 30-32 ATP, compared to the small net gain from glycolysis alone.",
-      relevantMaterial:
-        "In total, aerobic respiration of one glucose molecule yields roughly 30-32 ATP, far more than glycolysis alone.",
+        "In an elastic collision, both momentum and total kinetic energy are conserved — no energy is lost to heat, sound, or deformation.",
     },
   ],
-  photosynthesis: [
+  "waves-sound": [
     {
-      statement:
-        "Photosynthesis occurs in the chloroplast and converts light energy into chemical energy stored in glucose.",
+      statement: "Wave speed equals frequency multiplied by wavelength.",
       isCorrect: true,
-      explanation:
-        "Correct. Photosynthesis takes place in the chloroplast and stores light energy as chemical energy in glucose.",
-      relevantMaterial:
-        "Photosynthesis is the process by which plants, algae, and some bacteria convert light energy into chemical energy stored in glucose. It takes place in the chloroplast.",
+      explanation: "Correct. v = f·λ.",
+      relevantMaterial: "Wave speed relates these quantities as v = f·λ.",
     },
     {
       statement:
-        "The light-dependent reactions take place in the thylakoid membranes, where splitting water releases oxygen as a byproduct.",
+        "Sound is a longitudinal wave that requires a medium to travel through and cannot propagate through a vacuum.",
       isCorrect: true,
-      explanation:
-        "Correct. The light reactions occur in the thylakoid membranes, and splitting water (photolysis) releases oxygen.",
+      explanation: "Correct. Sound needs a medium and cannot travel through a vacuum.",
       relevantMaterial:
-        "The light-dependent reactions occur in the thylakoid membranes inside the chloroplast... split water molecules (photolysis), releasing oxygen as a byproduct.",
+        "Sound is a longitudinal wave made of compressions and rarefactions of a medium; it requires a medium to travel through and cannot propagate through a vacuum.",
     },
     {
       statement:
-        "The Calvin cycle takes place in the thylakoid membrane, where the enzyme RuBisCO fixes carbon dioxide into organic molecules.",
+        "According to the Doppler effect, the frequency of a sound appears lower to an observer when the source is moving toward them.",
       isCorrect: false,
-      mistakePhrase: "thylakoid membrane",
+      mistakePhrase: "appears lower to an observer when the source is moving toward them",
       explanation:
-        "The Calvin cycle actually takes place in the stroma, not the thylakoid membrane. The thylakoid membrane is where the light-dependent reactions occur.",
+        "When the source moves toward the observer, the perceived frequency is higher, not lower — frequency appears lower when the source moves away.",
       relevantMaterial:
-        "The second stage, the Calvin cycle (light-independent reactions), takes place in the stroma, the fluid-filled space surrounding the thylakoids.",
+        "the observed frequency is higher than the source's actual frequency when the source moves toward the observer... and lower when the source moves away.",
     },
   ],
-  "human-biology": [
+  "electricity-circuits": [
     {
-      statement:
-        "The left ventricle has thicker, more muscular walls than the right ventricle because it must pump blood through the entire systemic circulation.",
+      statement: "Ohm's Law states that voltage equals current multiplied by resistance.",
       isCorrect: true,
-      explanation:
-        "Correct. The left ventricle's thicker walls generate the higher pressure needed to pump blood through the whole body, not just the lungs.",
-      relevantMaterial:
-        "The left ventricle has thicker, more muscular walls than the right ventricle because it must generate enough pressure to pump blood through the entire systemic circulation.",
+      explanation: "Correct. V = IR.",
+      relevantMaterial: "Ohm's law relates these three quantities: V = IR, voltage equals current multiplied by resistance.",
     },
     {
       statement:
-        "In the alveoli, oxygen diffuses from the blood into the air sacs, while carbon dioxide diffuses from the air into the blood to be used by the body.",
+        "In a series circuit, the same current flows through every component, while the voltage divides across them.",
+      isCorrect: true,
+      explanation: "Correct, this is how series circuits behave.",
+      relevantMaterial:
+        "In a series circuit, components are connected end to end along a single path, so the same current flows through every component, while the total voltage divides across them.",
+    },
+    {
+      statement:
+        "In a parallel circuit, the total resistance is always greater than the resistance of any single branch.",
       isCorrect: false,
-      mistakePhrase: "oxygen diffuses from the blood into the air sacs",
+      mistakePhrase: "is always greater than the resistance of any single branch",
       explanation:
-        "This reverses the direction of gas exchange. Oxygen actually diffuses from the alveoli into the blood, while carbon dioxide diffuses from the blood into the alveoli to be exhaled.",
+        "Total resistance in a parallel circuit is actually always less than the smallest individual branch resistance, since more parallel paths make it easier for current to flow.",
       relevantMaterial:
-        "Oxygen diffuses from the alveoli into the blood, while carbon dioxide diffuses from the blood into the alveoli to be exhaled.",
-    },
-    {
-      statement:
-        "Neurons communicate via electrical action potentials that travel down the axon, and via neurotransmitters that cross the synapse to the next neuron.",
-      isCorrect: true,
-      explanation:
-        "Correct. Neurons use electrical action potentials along the axon and chemical neurotransmitters across synapses to communicate.",
-      relevantMaterial:
-        "Neurons communicate via electrical signals called action potentials, which travel down the axon, and chemical signals called neurotransmitters, which cross the synapse to the next neuron.",
+        "The total resistance of a parallel circuit is always less than the resistance of the smallest individual branch, since adding more parallel paths gives current more routes to flow.",
     },
   ],
-  ecology: [
+  thermodynamics: [
     {
       statement:
-        "Only about 10% of the energy available at one trophic level is typically transferred to the next, with the rest lost mostly as heat.",
+        "The first law of thermodynamics states that the change in internal energy of a system equals the heat added minus the work done by the system.",
       isCorrect: true,
-      explanation:
-        "Correct. Roughly 10% of energy transfers between trophic levels, with most of the rest lost as heat through metabolism.",
+      explanation: "Correct. ΔU = Q - W.",
       relevantMaterial:
-        "Only about 10% of the energy available at one trophic level is typically transferred to the next trophic level; the rest is lost mostly as heat.",
+        "The first law of thermodynamics is a statement of energy conservation: the change in a system's internal energy equals the heat added to the system minus the work done by the system, ΔU = Q - W.",
     },
     {
       statement:
-        "In an ecosystem, decomposers recycle energy back to producers, while matter flows continuously in one direction starting as sunlight.",
+        "Heat flows spontaneously from a hotter object to a colder one, not the reverse, according to the second law of thermodynamics.",
+      isCorrect: true,
+      explanation: "Correct, this follows from the second law of thermodynamics.",
+      relevantMaterial:
+        "heat flows spontaneously from a hotter object to a colder one, never the reverse, without external work being done.",
+    },
+    {
+      statement:
+        "Specific heat capacity describes how much work is required to change an object's volume by one unit at constant pressure.",
       isCorrect: false,
-      mistakePhrase: "decomposers recycle energy back to producers",
+      mistakePhrase: "how much work is required to change an object's volume by one unit at constant pressure",
       explanation:
-        "This swaps matter and energy. Decomposers recycle matter/nutrients back into the ecosystem; energy flows in one direction from sunlight and is not recycled.",
+        "Specific heat capacity actually describes how much heat energy is required to raise the temperature of a unit mass of a substance by one degree, not a change in volume.",
       relevantMaterial:
-        "Decomposers... break down dead organic matter, recycling nutrients... Unlike energy, matter is recycled within ecosystems rather than flowing in one direction.",
-    },
-    {
-      statement:
-        "Mutualism is a species interaction in which both participating species benefit, such as bees pollinating flowers.",
-      isCorrect: true,
-      explanation:
-        "Correct. Mutualism describes an interaction where both species involved benefit, such as bees and flowering plants.",
-      relevantMaterial:
-        "mutualism (both species benefit, such as bees pollinating flowers)",
+        "Specific heat capacity describes how much heat energy is required to raise the temperature of a unit mass of a substance by one degree; the relationship is Q = mcΔT.",
     },
   ],
   [finalChallengeId]: [
     {
       statement:
-        "During meiosis, sister chromatids separate during anaphase I, the same stage at which homologous chromosomes separate.",
+        "In projectile motion, horizontal velocity remains constant while vertical velocity changes due to gravitational acceleration of about 9.8 m/s².",
+      isCorrect: true,
+      explanation:
+        "Correct. This combines kinematics and the constant downward acceleration of gravity near Earth's surface.",
+      relevantMaterial:
+        "horizontal velocity stays constant throughout the flight... while vertical velocity changes continuously due to gravity... approximately 9.8 m/s², directed downward.",
+    },
+    {
+      statement:
+        "During a perfectly inelastic collision, the colliding objects stick together, and while momentum is conserved, kinetic energy is generally not.",
+      isCorrect: true,
+      explanation:
+        "Correct. Perfectly inelastic collisions conserve momentum but not kinetic energy, since some converts to heat, sound, or deformation.",
+      relevantMaterial:
+        "A perfectly inelastic collision is a special case of an inelastic collision in which the two objects stick together after colliding... momentum is still conserved, but kinetic energy is not.",
+    },
+    {
+      statement:
+        "A sound wave's frequency appears higher to a stationary observer when its source is moving away from them, according to the Doppler effect.",
       isCorrect: false,
-      mistakePhrase: "sister chromatids separate during anaphase I",
+      mistakePhrase: "appears higher to a stationary observer when its source is moving away from them",
       explanation:
-        "Sister chromatids remain joined during anaphase I and only separate during anaphase II. Only homologous chromosomes separate in anaphase I.",
+        "This has it backwards — frequency appears lower when the source moves away, and higher when the source moves toward the observer.",
       relevantMaterial:
-        "During meiosis I, homologous chromosomes pair up and separate during anaphase I, while sister chromatids remain joined; sister chromatids only separate during anaphase II.",
-    },
-    {
-      statement:
-        "Photosynthesis produces the oxygen and glucose that cellular respiration consumes, while cellular respiration produces the carbon dioxide and water that photosynthesis consumes.",
-      isCorrect: true,
-      explanation:
-        "Correct. Photosynthesis and respiration are complementary: each process's outputs are the other's inputs.",
-      relevantMaterial:
-        "Photosynthesis and cellular respiration are complementary processes: respiration consumes the oxygen and glucose that photosynthesis produces, and produces the carbon dioxide and water that photosynthesis consumes.",
-    },
-    {
-      statement:
-        "In an energy pyramid, producers typically have far more biomass than top predators, since only about 10% of energy passes to each subsequent trophic level.",
-      isCorrect: true,
-      explanation:
-        "Correct. Because only ~10% of energy transfers between trophic levels, producer biomass is far greater than top-predator biomass in most ecosystems.",
-      relevantMaterial:
-        "This is why food chains rarely extend beyond four or five trophic levels and why there is far more producer biomass than top-predator biomass in most ecosystems.",
+        "the observed frequency is higher than the source's actual frequency when the source moves toward the observer... and lower when the source moves away from the observer.",
     },
   ],
 };

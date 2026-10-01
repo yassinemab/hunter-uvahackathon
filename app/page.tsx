@@ -1,5 +1,5 @@
 import Roadmap from "@/components/Roadmap";
-import { finalChallengeChapter, regularChapters } from "@/lib/biology";
+import { finalChallengeChapter, regularChapters } from "@/lib/physics";
 
 export default function Home() {
   return (

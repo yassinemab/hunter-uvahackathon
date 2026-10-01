@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getLevel } from "@/lib/biology";
+import { getLevel } from "@/lib/physics";
 import { generateStatements } from "@/lib/llm";
 import type { GenerateRequest, GenerateResponse } from "@/lib/types";
 

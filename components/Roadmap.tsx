@@ -47,7 +47,7 @@ export default function Roadmap({
   return (
     <div className="mx-auto w-full max-w-2xl px-6 py-16 sm:py-24">
       <header className="mb-14 text-center">
-        <p className="text-sm font-medium text-brand-600 dark:text-brand-400">Biology 101</p>
+        <p className="text-sm font-medium text-brand-600 dark:text-brand-400">Physics 101</p>
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
           Mistake Hunter
         </h1>
