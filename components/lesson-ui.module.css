@@ -37,7 +37,7 @@
 .mapLink { display: flex; align-items: center; gap: 20px; padding: 10px 15px; border: 1px solid #d2d7c7; border-radius: 9px; font-size: 11px; font-weight: 600; text-decoration: none; transition: background .2s; }
 .mapLink:hover { background: #e9ecdf; }
 .mapLink span { font-size: 18px; }
-.main { position: relative; width: 100%; max-width: 1204px; margin: 0 auto; padding: 38px 42px 24px; }
+.main { position: relative; width: 100%; max-width: 1204px; margin: 0 auto; padding: 38px 42px 132px; }
 .eyebrow { display: flex; align-items: center; gap: 9px; font-size: 9px; letter-spacing: 1.8px; font-weight: 650; color: #7c866e; }
 .eyebrow > span { width: 6px; height: 6px; border-radius: 50%; background: var(--forest-orange); }
 .completeCopy h2 > span { color: var(--forest-orange); }
@@ -89,7 +89,7 @@
 .explanationInput:focus { outline: 0; }
 .explanationCard:focus-within { border-color: #98ad7d; box-shadow: 0 0 0 2px #8eaa7133; }
 .explanationInput:disabled { opacity: .5; }
-.submitRow { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 20px; padding-right: 105px; }
+.submitRow { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 20px; }
 .submitRow > p { font-size: 9px; color: #909783; }
 .primaryButton { display: inline-flex; align-items: center; justify-content: center; gap: 27px; border: 1px solid #284631; border-radius: 9px; color: #f8f5e8; background: #3c6545; box-shadow: 0 3px 0 #263e33; font-family: inherit; font-weight: 600; font-size: 11px; padding: 13px 20px; transition: background .2s, transform .2s; text-decoration: none; }
 .primaryButton:hover { background: #496f4d; transform: translateY(-1px); }
@@ -111,7 +111,7 @@
 .woodlandOne { left: 17%; }
 .woodlandTwo { left: 43%; bottom: 24px; }
 .woodlandThree { right: 18%; }
-.helpDock { position: fixed; right: 23px; bottom: 20px; z-index: 30; display: flex; flex-direction: column; align-items: center; }
+.helpDock { position: absolute; right: 23px; bottom: 20px; z-index: 30; display: flex; flex-direction: column; align-items: center; }
 .helpTrigger { position: relative; display: block; width: 78px; height: 78px; background: #e5ebd9; border: 2px solid #f9faf0; box-shadow: 0 4px 0 #cbd5b7, 0 9px 25px #33462b13; border-radius: 50%; padding: 0; transition: transform .2s; }
 .helpTrigger:hover { transform: translateY(-3px) rotate(-3deg); }
 .helpTrigger:disabled { opacity: .6; }
@@ -148,7 +148,7 @@
 .completeCopy .primaryButton { margin-top: 25px; }
 @media (max-width: 1050px) {
   .levelContext { padding-left: 18px; }
-  .main { padding: 30px 28px 24px; }
+  .main { padding: 30px 28px 132px; }
   .topbar { padding: 0 28px; gap: 18px; }
   .helpDock { right: 15px; bottom: 15px; }
   .helpTrigger { height: 66px; width: 66px; }
@@ -164,7 +164,7 @@
   .contextPath { font-size: 11px; gap: 7px; }
   .contextPath h1 { font-size: 12px; }
   .levelContext > p { margin-top: 3px; font-size: 6px; }
-  .main { padding: 26px 18px 105px; }
+  .main { padding: 26px 18px 132px; }
   .claimCard { padding: 22px 18px 18px; }
   .statementHeading h2 { font-size: 31px; }
   .claimTop { font-size: 7px; }
