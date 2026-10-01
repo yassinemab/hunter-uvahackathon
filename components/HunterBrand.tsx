@@ -8,7 +8,7 @@ export default function HunterBrand() {
       <Image src="/mascot/robin-icon.svg" alt="" width={42} height={46} className={styles.brandRobin} />
       <span>
         <strong>Hunter<span className={styles.brandDot}>.</span></strong>
-        <Image src="/uva-logo.png" alt="University of Amsterdam" width={600} height={314} sizes="150px" className={styles.brandUva} />
+        <Image src="/uva-logo-horizontal.png" alt="University of Amsterdam" width={1097} height={134} sizes="190px" className={styles.brandUva} />
       </span>
     </Link>
   );
