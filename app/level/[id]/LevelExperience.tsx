@@ -8,6 +8,7 @@ import FeedbackCard from "@/components/FeedbackCard";
 import ProgressBar from "@/components/ProgressBar";
 import StatementCard from "@/components/StatementCard";
 import RobinMascot from "@/components/RobinMascot";
+import { getRobinHint } from "@/components/robin-hints";
 import HunterBrand from "@/components/HunterBrand";
 import styles from "@/components/lesson-ui.module.css";
 import { MAX_ATTEMPTS } from "@/lib/constants";
@@ -305,7 +306,7 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
           {helpOpen && (
             <div className={styles.helpFlyout} id="robin-help-flyout">
               <span className={styles.helpName}>ROBIN&apos;S LOOKOUT</span>
-              <p>{hintRevealed ? "Read the claim once more. Check its definitions and relationships against what you know." : "Need another pair of eyes? Let's take a closer look together."}</p>
+              <p>{hintRevealed ? getRobinHint(current.statement) : "Need another pair of eyes? Let's take a closer look together."}</p>
               <button type="button" onClick={() => setHintRevealed((prev) => !prev)} disabled={evaluating} aria-pressed={hintRevealed} className={styles.helpAction}>
                 {hintRevealed ? "Hide hint" : "Get help"}<span aria-hidden="true">↗</span>
               </button>

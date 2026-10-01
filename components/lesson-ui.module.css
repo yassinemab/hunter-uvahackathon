@@ -106,7 +106,7 @@
 .helpPortrait { height: 100%; width: 100%; border-radius: 50%; overflow: hidden; }
 .helpIndicator { position: absolute; right: -2px; top: -1px; display: grid; place-items: center; height: 22px; width: 22px; background: #edbb6e; color: #5b492e; border: 2px solid #f5f4ec; border-radius: 50%; font-size: 12px; font-weight: 600; }
 .helpCaption { margin-top: 10px; color: #7f8a6d; font-size: 7px; letter-spacing: 1px; font-weight: 650; }
-.helpFlyout { position: absolute; bottom: 106px; right: 0; width: 264px; padding: 20px; background: #fbfbee; border: 1px solid #cfd8bd; border-radius: 15px; box-shadow: 0 4px 0 #d7dfc9, 0 12px 35px #2c3e2520; transform-origin: 88% 100%; animation: helpAppear .3s cubic-bezier(.18,.82,.26,1.14) both; }
+.helpFlyout { position: absolute; bottom: 106px; right: 0; width: 320px; padding: 20px; background: #fbfbee; border: 1px solid #cfd8bd; border-radius: 15px; box-shadow: 0 4px 0 #d7dfc9, 0 12px 35px #2c3e2520; transform-origin: 88% 100%; animation: helpAppear .3s cubic-bezier(.18,.82,.26,1.14) both; }
 .helpFlyout::after { content: ''; position: absolute; right: 30px; bottom: -8px; height: 15px; width: 15px; transform: rotate(45deg); background: #fbfbee; border-bottom: 1px solid #cfd8bd; border-right: 1px solid #cfd8bd; }
 .helpName { color: #83926b; font-size: 8px; letter-spacing: 1.6px; font-weight: 650; }
 .helpFlyout p { color: #536647; font-size: 12px; line-height: 1.75; margin: 10px 0 15px; }
