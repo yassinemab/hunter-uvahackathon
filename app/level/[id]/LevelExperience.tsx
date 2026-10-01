@@ -7,6 +7,8 @@ import ExplanationInput from "@/components/ExplanationInput";
 import FeedbackCard from "@/components/FeedbackCard";
 import ProgressBar from "@/components/ProgressBar";
 import StatementCard from "@/components/StatementCard";
+import RobinMascot from "@/components/RobinMascot";
+import styles from "@/components/lesson-ui.module.css";
 import { MAX_ATTEMPTS } from "@/lib/constants";
 import { computeHintSpan } from "@/lib/hint";
 import { markLevelCompleted } from "@/lib/progress";
@@ -40,6 +42,7 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
   // back. Only reset when actually moving to a different statement.
   const [attempts, setAttempts] = useState(1);
   const [hintRevealed, setHintRevealed] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -161,6 +164,7 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
     }
 
     resetAnswerState();
+    setHelpOpen(false);
   };
 
   const completed = status === "ready" && queue.length === 0;
@@ -169,153 +173,146 @@ export default function LevelExperience({ level }: { level: LevelWithContext }) 
     if (completed) markLevelCompleted(level.id);
   }, [completed, level.id]);
 
+  const arrowsLeft = Math.max(0, MAX_ATTEMPTS - attempts + (evaluation && !evaluation.correct ? 0 : 1));
+
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-zinc-950">
-      <div className="mx-auto w-full max-w-2xl flex-1 px-6 py-12 sm:py-16">
-        <Link
-          href="/"
-          className="text-sm font-medium text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-300"
-        >
-          ← {level.chapterTitle}
+    <div className={styles.lesson}>
+      <header className={styles.topbar}>
+        <Link href="/" className={styles.brand} aria-label="Mistake Hunter home">
+          <span className={styles.brandMark} aria-hidden="true">↗</span>
+          Mistake Hunter<span className={styles.brandDot}>.</span>
         </Link>
-        {level.levelCount > 1 && (
-          <p className="mt-1 text-xs font-medium uppercase tracking-wide text-zinc-400">
-            Level {level.levelIndex} of {level.levelCount} · {level.title}
-          </p>
-        )}
+        <div className={styles.levelContext}>
+          <div className={styles.contextPath}><span>{level.chapterTitle}</span><span aria-hidden="true">/</span><h1>{level.title}</h1></div>
+          <p>LEVEL {level.levelIndex} OF {level.levelCount}</p>
+        </div>
+        <div className={styles.topbarActions}>
+          <details className={styles.instructions}>
+            <summary aria-label="How to play" title="How to play">?</summary>
+            <div className={styles.instructionsPopover}>
+              <h2>How to play</h2>
+              <ol>
+                <li>Select the words you think are wrong, or mark the statement correct.</li>
+                <li>Explain your reasoning in your own words.</li>
+                <li>Shoot your answer. You have three attempts per statement.</li>
+              </ol>
+              <p>Need a hint? Ask Robin in the bottom-right corner.</p>
+            </div>
+          </details>
+          <Link href="/" className={styles.mapLink}>Back to forest <span aria-hidden="true">↗</span></Link>
+        </div>
+      </header>
+
+      <main className={styles.main}>
 
         {status === "loading" && (
-          <div className="mt-8 animate-pulse rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <div className="h-4 w-32 rounded bg-zinc-100 dark:bg-zinc-800" />
-            <div className="mt-6 h-5 w-full rounded bg-zinc-100 dark:bg-zinc-800" />
-            <div className="mt-3 h-5 w-5/6 rounded bg-zinc-100 dark:bg-zinc-800" />
-            <div className="mt-3 h-5 w-3/4 rounded bg-zinc-100 dark:bg-zinc-800" />
-            <p className="mt-8 text-sm text-zinc-400">Generating statements…</p>
+          <div className={styles.loadingCard} role="status">
+            <RobinMascot state="idle" variant="portrait" className={styles.loadingRobin} />
+            <div><h2>Getting the hunt ready...</h2><p>Generating statements for this level.</p></div>
+            <div className={styles.loadingLines} aria-hidden="true"><span /><span /><span /></div>
           </div>
         )}
 
         {status === "error" && (
-          <div className="mt-8 rounded-3xl border border-zinc-200 bg-white p-8 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <p className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-              Couldn&apos;t load this level
-            </p>
-            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-              Something went wrong generating statements. Let&apos;s try that again.
-            </p>
+          <div className={styles.statusCard}>
+            <p className={styles.eyebrow}>LET&apos;S TRY AGAIN</p>
+            <h2>Couldn&apos;t load this level</h2>
+            <p>Something went wrong generating statements. Let&apos;s try that again.</p>
             <button
               type="button"
               onClick={() => {
                 setStatus("loading");
                 setReloadKey((k) => k + 1);
               }}
-              className="mt-5 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-            >
-              Retry
-            </button>
+              className={styles.primaryButton}
+            >Retry</button>
           </div>
         )}
 
         {completed && (
-          <div className="mt-8 rounded-3xl border border-brand-200 bg-gradient-to-br from-brand-50 to-white p-10 text-center shadow-sm dark:border-brand-900 dark:from-brand-950 dark:to-zinc-900">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-600 text-2xl text-white">
-              ✓
-            </span>
-            <h2 className="mt-5 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-              Level complete
-            </h2>
-            <p className="mt-1 text-base font-medium text-brand-600 dark:text-brand-400">
-              {level.chapterTitle}
-              {level.levelCount > 1 ? ` · ${level.title}` : ""}
-            </p>
-            <p className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
-              {totalCount} / {totalCount} statements solved
-            </p>
-            <Link
-              href="/"
-              className="mt-7 inline-flex rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500"
-            >
-              Continue to roadmap
-            </Link>
+          <div className={styles.completeCard}>
+            <div className={styles.completeScene}><RobinMascot state="correct" variant="scene" /></div>
+            <div className={styles.completeCopy}>
+              <p className={styles.eyebrow}><span /> ALL TARGETS FOUND</p>
+              <h2>Level complete<span>.</span></h2>
+              <p className={styles.completeSubject}>{level.chapterTitle}{level.levelCount > 1 ? ` · ${level.title}` : ""}</p>
+              <p>{totalCount} / {totalCount} statements solved. Your forest is growing.</p>
+              <Link href="/" className={styles.primaryButton}>Continue to roadmap <span aria-hidden="true">→</span></Link>
+            </div>
           </div>
         )}
 
         {status === "ready" && !completed && current && (
-          <div className="mt-8">
-            <div className="mb-6">
-              <p className="mb-2 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                Question {solvedCount + 1} of {totalCount}
-              </p>
+          <div className={styles.huntLayout}>
+            <section className={styles.exercise} aria-label="Current statement">
+              <div className={styles.progressHeader}>
+                <div className={styles.progressCopy}><span>QUESTION {solvedCount + 1} / {totalCount}</span><strong>{solvedCount} solved</strong></div>
+                <div className={styles.quiver} aria-label={`${arrowsLeft} of ${MAX_ATTEMPTS} arrows remaining`}>
+                  <div className={styles.arrows} aria-hidden="true">
+                    {Array.from({ length: MAX_ATTEMPTS }, (_, i) => (
+                      <svg key={i} viewBox="0 0 18 38" className={i < arrowsLeft ? styles.arrow : styles.arrowSpent}>
+                        <path d="M9 31V7M9 3 5 10h8L9 3Z" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="m9 27-5-5v8l5 5 5-5v-8l-5 5Z" fill="currentColor" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span>{arrowsLeft} / {MAX_ATTEMPTS} arrows</span>
+                </div>
+              </div>
               <ProgressBar current={solvedCount} total={totalCount} />
-            </div>
 
-            {evaluation ? (
-              <FeedbackCard
-                statement={current}
-                evaluation={evaluation}
-                attemptNumber={attempts}
-                onContinue={handleContinue}
-              />
-            ) : (
-              <>
-                <StatementCard
-                  statement={current.statement}
-                  selectedSpan={selectedSpan}
-                  onSelectSpan={handleSelectSpan}
-                  believesCorrect={believesCorrect}
-                  onToggleBelievesCorrect={handleToggleBelievesCorrect}
-                  disabled={evaluating}
-                  hintSpan={hintSpan}
-                />
-
-                <ExplanationInput
-                  label={believesCorrect ? "Why?" : "Why is this incorrect?"}
-                  value={explanation}
-                  onChange={setExplanation}
-                  disabled={evaluating}
-                />
-
-                {evalError && <p className="mt-3 text-sm text-rose-600 dark:text-rose-400">{evalError}</p>}
-
-                <button
-                  type="button"
-                  onClick={handleCheckAnswer}
-                  disabled={!canSubmit}
-                  className="mt-5 w-full rounded-full bg-zinc-900 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500"
-                >
-                  {evaluating ? "Checking…" : "Check answer"}
-                </button>
-              </>
-            )}
+              {evaluation ? (
+                <FeedbackCard statement={current} evaluation={evaluation} attemptNumber={attempts} onContinue={handleContinue} />
+              ) : (
+                <>
+                  <StatementCard
+                    statement={current.statement}
+                    selectedSpan={selectedSpan}
+                    onSelectSpan={handleSelectSpan}
+                    believesCorrect={believesCorrect}
+                    onToggleBelievesCorrect={handleToggleBelievesCorrect}
+                    disabled={evaluating}
+                    hintSpan={hintSpan}
+                  />
+                  <ExplanationInput
+                    label={believesCorrect ? "Why?" : "Why is this incorrect?"}
+                    value={explanation}
+                    onChange={setExplanation}
+                    disabled={evaluating}
+                  />
+                  {evalError && <p className={styles.errorMessage} role="alert">{evalError}</p>}
+                  <div className={styles.submitRow}>
+                    <p>One arrow. One well-reasoned answer.</p>
+                    <button type="button" onClick={handleCheckAnswer} disabled={!canSubmit} className={styles.primaryButton}>
+                      {evaluating ? "Checking…" : "Shoot your answer"}<span aria-hidden="true">↗</span>
+                    </button>
+                  </div>
+                </>
+              )}
+            </section>
           </div>
         )}
-      </div>
+        <footer className={styles.footer}><span>TAKE YOUR TIME. AIM WITH UNDERSTANDING.</span><span>MISTAKE HUNTER · FIELD NOTES</span></footer>
+      </main>
 
-      {status === "ready" &&
-        !completed &&
-        !evaluation &&
-        current?.incorrectSpan &&
-        !believesCorrect && (
-          <button
-            type="button"
-            onClick={() => setHintRevealed((prev) => !prev)}
-            disabled={evaluating}
-            aria-pressed={hintRevealed}
-            className={`fixed bottom-6 right-6 flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
-              hintRevealed
-                ? "bg-amber-500 text-white hover:bg-amber-400"
-                : "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"
-            }`}
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8}>
-              <path
-                d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.4 10.9c.6.44.9 1.16.9 1.9v.2h5v-.2c0-.74.3-1.46.9-1.9A6 6 0 0 0 12 3z"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            {hintRevealed ? "Hide hint" : "Hint"}
+      {status === "ready" && !completed && !evaluation && current?.incorrectSpan && !believesCorrect && (
+        <div className={styles.helpDock}>
+          {helpOpen && (
+            <div className={styles.helpFlyout} id="robin-help-flyout">
+              <span className={styles.helpName}>ROBIN&apos;S LOOKOUT</span>
+              <p>{hintRevealed ? "The golden highlight shows where to look. What doesn't add up?" : "Need another pair of eyes? I can point you in the right direction."}</p>
+              <button type="button" onClick={() => setHintRevealed((prev) => !prev)} disabled={evaluating} aria-pressed={hintRevealed} className={styles.helpAction}>
+                {hintRevealed ? "Hide hint" : "Get help"}<span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          )}
+          <button type="button" onClick={() => setHelpOpen((prev) => !prev)} disabled={evaluating} aria-label={helpOpen ? "Close Robin's help" : "Ask Robin for help"} aria-expanded={helpOpen} aria-controls={helpOpen ? "robin-help-flyout" : undefined} className={styles.helpTrigger}>
+            <RobinMascot state="idle" variant="portrait" className={styles.helpPortrait} />
+            <span className={styles.helpIndicator} aria-hidden="true">{helpOpen ? "×" : "?"}</span>
           </button>
-        )}
+          <span className={styles.helpCaption}>ASK ROBIN</span>
+        </div>
+      )}
     </div>
   );
 }

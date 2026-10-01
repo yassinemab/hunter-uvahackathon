@@ -6,22 +6,22 @@
 
 :root {
   color-scheme: light;
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f4ec;
+  --foreground: #263e33;
 
   /* Brand accent scale, derived from a single hex via color-mix so every
      shade stays proportionally consistent with the base color. */
-  --brand-50: color-mix(in srgb, #840022 4%, white);
-  --brand-100: color-mix(in srgb, #840022 10%, white);
-  --brand-200: color-mix(in srgb, #840022 22%, white);
-  --brand-300: color-mix(in srgb, #840022 38%, white);
-  --brand-400: color-mix(in srgb, #840022 58%, white);
-  --brand-500: color-mix(in srgb, #840022 80%, white);
-  --brand-600: #840022;
-  --brand-700: color-mix(in srgb, #840022 85%, black);
-  --brand-800: color-mix(in srgb, #840022 70%, black);
-  --brand-900: color-mix(in srgb, #840022 55%, black);
-  --brand-950: color-mix(in srgb, #840022 40%, black);
+  --brand-50: color-mix(in srgb, #3c6545 4%, white);
+  --brand-100: color-mix(in srgb, #3c6545 10%, white);
+  --brand-200: color-mix(in srgb, #3c6545 22%, white);
+  --brand-300: color-mix(in srgb, #3c6545 38%, white);
+  --brand-400: color-mix(in srgb, #3c6545 58%, white);
+  --brand-500: color-mix(in srgb, #3c6545 80%, white);
+  --brand-600: #3c6545;
+  --brand-700: color-mix(in srgb, #3c6545 85%, black);
+  --brand-800: color-mix(in srgb, #3c6545 70%, black);
+  --brand-900: color-mix(in srgb, #3c6545 55%, black);
+  --brand-950: color-mix(in srgb, #3c6545 40%, black);
 }
 
 @theme inline {
@@ -53,3 +53,9 @@ body {
   background: color-mix(in srgb, var(--brand-600) 25%, transparent);
 }
 
+
+/* Shared forest palette and keyboard navigation. */
+a:focus-visible, button:focus-visible, textarea:focus-visible {
+  outline: 3px solid #dca65a;
+  outline-offset: 4px;
+}

@@ -1,3 +1,6 @@
+import { useId } from "react";
+import styles from "./lesson-ui.module.css";
+
 export default function ExplanationInput({
   label,
   value,
@@ -9,18 +12,21 @@ export default function ExplanationInput({
   onChange: (value: string) => void;
   disabled?: boolean;
 }) {
+  const inputId = useId();
   return (
-    <div className="mt-5">
-      <label className="mb-2 block text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-        {label}
-      </label>
+    <div className={styles.explanationCard}>
+      <div className={styles.explanationHeading}>
+        <label htmlFor={inputId}>{label}</label>
+        <span>YOUR REASONING</span>
+      </div>
       <textarea
+        id={inputId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Explain your reasoning..."
+        placeholder="Explain what you know, and why the claim misses the mark..."
         disabled={disabled}
         rows={3}
-        className="w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-400 shadow-sm transition focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100 disabled:cursor-not-allowed disabled:bg-zinc-50 disabled:text-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:disabled:bg-zinc-800"
+        className={styles.explanationInput}
       />
     </div>
   );

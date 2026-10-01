@@ -1,3 +1,4 @@
+import Image from "next/image";
 import PathNode from "./PathNode";
 
 export type WindingPathNode = {
@@ -10,77 +11,49 @@ export type WindingPathNode = {
   tooltip?: string;
 };
 
-const ROW_HEIGHT = 136;
-const NODE_SIZE = 64;
-const FINAL_NODE_SIZE = 80;
-const X_POSITIONS = [18, 50, 82];
+const ROW_HEIGHT = 148;
+const NODE_SIZE = 110;
+const X_POSITIONS = [27, 67, 37];
 
-function nodeSize(node: WindingPathNode): number {
-  return node.variant === "final" ? FINAL_NODE_SIZE : NODE_SIZE;
-}
-
-/**
- * Lays out a sequence of nodes as a winding "roadmap" path: alternating
- * left/center/right positions connected by a smooth dashed S-curve. Position
- * is computed purely from index/count, so it's deterministic and safe to
- * render on the server (no DOM measurement required).
- */
+/** Static, deterministic forest paths. Existing level links remain selectable. */
 export default function WindingPath({ nodes }: { nodes: WindingPathNode[] }) {
   const single = nodes.length === 1;
-  const maxSize = Math.max(...nodes.map(nodeSize), NODE_SIZE);
-  const height = (nodes.length - 1) * ROW_HEIGHT + maxSize + 28;
-
+  const height = (nodes.length - 1) * ROW_HEIGHT + NODE_SIZE + 74;
   const points = nodes.map((node, i) => ({
     node,
     xPercent: single ? 50 : X_POSITIONS[i % X_POSITIONS.length],
-    y: i * ROW_HEIGHT + maxSize / 2,
+    y: i * ROW_HEIGHT + NODE_SIZE / 2 + 28,
   }));
 
   let pathD = "";
   points.forEach((p, i) => {
     if (i === 0) {
-      pathD += `M ${p.xPercent} ${p.y}`;
+      pathD += `M ${p.xPercent} ${p.y + 20}`;
       return;
     }
     const prev = points[i - 1];
-    const midY = (prev.y + p.y) / 2;
-    pathD += ` C ${prev.xPercent} ${midY}, ${p.xPercent} ${midY}, ${p.xPercent} ${p.y}`;
+    const midY = (prev.y + p.y) / 2 + 20;
+    pathD += ` C ${prev.xPercent} ${midY}, ${p.xPercent} ${midY}, ${p.xPercent} ${p.y + 20}`;
   });
 
   return (
-    <div className="relative mx-auto w-full max-w-xs" style={{ height }}>
+    <div className="forest-winding-path" style={{ height }}>
       {points.length > 1 && (
-        <svg
-          aria-hidden
-          viewBox={`0 0 100 ${height}`}
-          preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full text-zinc-300 dark:text-zinc-700"
-        >
-          <path
-            d={pathD}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2.5}
-            strokeDasharray="2 9"
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-          />
+        <svg aria-hidden="true" viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" className="forest-dirt-path">
+          <path d={pathD} fill="none" stroke="#d4bd91" strokeWidth={34} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+          <path d={pathD} fill="none" stroke="#e6d4ad" strokeWidth={27} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+          <path d={pathD} fill="none" stroke="#b9a37c" strokeWidth={2} strokeDasharray="1 17 2 29" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
         </svg>
       )}
+      {!single && <>
+        <Image src="/forest/woodland.svg" alt="" width={110} height={83} className="forest-decoration forest-decoration-right" aria-hidden="true" />
+        <Image src="/forest/woodland.svg" alt="" width={88} height={66} className="forest-decoration forest-decoration-left" aria-hidden="true" />
+        <span className="forest-sprig forest-sprig-one" aria-hidden="true" />
+        <span className="forest-sprig forest-sprig-two" aria-hidden="true" />
+      </>}
       {points.map(({ node, xPercent, y }) => (
-        <div
-          key={node.id}
-          className="absolute -translate-x-1/2"
-          style={{ left: `${xPercent}%`, top: y - nodeSize(node) / 2 }}
-        >
-          <PathNode
-            href={node.href}
-            label={node.label}
-            isCompleted={node.isCompleted}
-            isActive={node.isActive}
-            variant={node.variant}
-            tooltip={node.tooltip}
-          />
+        <div key={node.id} className="forest-node-position" style={{ left: `${xPercent}%`, top: y - NODE_SIZE / 2 }}>
+          <PathNode href={node.href} label={node.label} isCompleted={node.isCompleted} isActive={node.isActive} variant={node.variant} tooltip={node.tooltip} />
         </div>
       ))}
     </div>

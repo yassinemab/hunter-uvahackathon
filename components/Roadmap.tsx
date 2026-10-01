@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import WindingPath from "./WindingPath";
 import { getCompletedLevelIds } from "@/lib/progress";
 import type { Chapter } from "@/lib/types";
+import "./forest-map.css";
 
 function difficultyLabel(difficulty: number): string {
   if (difficulty <= 2) return "Easy";
@@ -43,41 +45,41 @@ export default function Roadmap({
     firstIncompleteIndex === -1
       ? flatLevels[flatLevels.length - 1]?.id
       : flatLevels[firstIncompleteIndex].id;
+  const completedCount = flatLevels.filter((level) => completed.has(level.id)).length;
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-6 py-16 sm:py-24">
-      <header className="mb-14 text-center">
-        <p className="text-sm font-medium text-brand-600 dark:text-brand-400">Physics 101</p>
-        <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
-          Mistake Hunter
-        </h1>
-        <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400">
-          Your mission: find the mistakes. Understand the material.
-        </p>
+    <div className="forest-shell">
+      <header className="forest-header">
+        <Link href="/" className="forest-brand"><span className="forest-brand-mark">↗</span>Mistake Hunter<span className="forest-brand-dot">.</span></Link>
+        <span className="forest-header-label">THE LEARNING TRAIL</span>
+        <span className="forest-course-pill"><span />Physics 101</span>
       </header>
-
-      <div className="mx-auto flex w-full max-w-xs flex-col gap-10">
+      <main className="forest-layout">
+        <div className="forest-map-column">
+          <div className="forest-map-heading">
+            <div>
+              <span className="forest-small-label">YOUR ROADMAP</span>
+              <h1>Into the forest</h1>
+              <p className="forest-map-caption">Pick any chapter. Find the mistakes. Follow your own path.</p>
+            </div>
+            <div className="forest-heading-progress">
+              <div className="forest-progress-label"><span>Trail progress</span><strong>{completedCount} / {flatLevels.length}</strong></div>
+              <div className="forest-progress-track" role="progressbar" aria-label="Completed levels" aria-valuenow={completedCount} aria-valuemin={0} aria-valuemax={flatLevels.length}>
+                <span style={{ width: `${flatLevels.length ? completedCount / flatLevels.length * 100 : 0}%` }} />
+              </div>
+              <p>{chapters.length} chapters · 1 final challenge</p>
+            </div>
+          </div>
+          <div className="forest-map">
         {allChapters.map((chapter, chapterIndex) => {
           const isFinal = chapter.id === finalChapter.id;
 
           return (
-            <section key={chapter.id}>
-              <div className="mb-2 flex items-center gap-3">
-                <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
-                <span
-                  className={`shrink-0 text-center text-xs font-semibold uppercase tracking-wide ${
-                    isFinal ? "text-red-800 dark:text-amber-400" : "text-zinc-400 dark:text-zinc-500"
-                  }`}
-                >
-                  {chapter.title}
-                  {!isFinal && (
-                    <span className="font-medium normal-case text-zinc-400 dark:text-zinc-600">
-                      {" "}
-                      · {difficultyLabel(chapter.difficulty)}
-                    </span>
-                  )}
-                </span>
-                <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+            <section key={chapter.id} className={`forest-chapter${isFinal ? " forest-final-chapter" : ""}`}>
+              <div className="forest-chapter-sign">
+                <span className="forest-chapter-number">{isFinal ? "↗" : String(chapterIndex + 1).padStart(2, "0")}</span>
+                <div><span className="forest-small-label">{isFinal ? "THE FINAL HUNT" : `CHAPTER ${chapterIndex + 1}`}</span><h3>{chapter.title}</h3></div>
+                <span className="forest-difficulty">{isFinal ? "All topics" : difficultyLabel(chapter.difficulty)}</span>
               </div>
 
               <WindingPath
@@ -94,7 +96,10 @@ export default function Roadmap({
             </section>
           );
         })}
-      </div>
+            <div className="forest-map-footer">Every mistake is a chance to learn.<span>Stay sharp, hunter.</span></div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
